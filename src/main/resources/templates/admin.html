@@ -4,15 +4,9 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
-<div th:if="${user}">
-    <br>Username: [[${user.getAuthority()}]]</br>
-
-</div>
+<h1>Admin, welcome spring boot security page!</h1>
 <form action="/auth/logout" method="POST">
     <button type="submit">Logout</button>
 </form>
-
-
 </body>
 </html>
