@@ -45,9 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
-//                .loginPage("/auth/login").permitAll()
-//                .defaultSuccessUrl("/auth/success")
-
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
@@ -57,25 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/auth/login");
     }
 
-    //    // аутентификация inMemory
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//        UserDetails admin =
-//                User.withDefaultPasswordEncoder()
-//                        .username("admin")
-//                        .password("admin")
-//                        .roles("ADMIN")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());

@@ -5,13 +5,37 @@
 </head>
 <body>
 <h1>Welcome to Index PAGE!</h1>
+<div th:each="role: ${roles}">
+    <td><span th:text="${role.getName()}"></span></td>
+</div>
 <div th:if="${user}">
-    <br>Username: [[${user.getAuthority()}]]</br>
+    <br>Username: [[${user.getName()}]]</br>
 
 </div>
 <form action="/auth/logout" method="POST">
     <button type="submit">Logout</button>
 </form>
+
+<p><a href="admin/signup">Add a new user</a></p>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="user: ${users}">
+        <td><span th:text="${user.getId()}"></span></td>
+        <td><span th:text="${user.getName()}"></span></td>
+        <td><span th:text="${user.getLastName()}"></span></td>
+        <td><span th:text="${user.getAge()}"></span></td>
+        <td>
+            <a th:href="@{edit?id=__${user.getId()}__}" class="btn btn-danger">Update</a>
+            <a th:href="@{delete?id=__${user.getId()}__}" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+</table>
 
 
 </body>

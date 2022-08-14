@@ -24,7 +24,12 @@ public class User implements UserDetails {
     private byte age;
     @Column(name = "password")
     private String password;
+    @Column(name = "email")
+    private String email;
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     public User() { }
@@ -37,12 +42,32 @@ public class User implements UserDetails {
 
     }
 
+    public User(String name, String lastName, String email, byte age, String password) {
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.password = password;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
     }
 
     public Long getId() {
@@ -89,7 +114,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<form action="#" th:action="@{adduser}" th:object="${user}" method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <label for="last_name">Email</label>
+    <input type="text" th:field="*{lastName}" id="last_name" placeholder="Last Name">
+    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+    <label for="age">Age</label>
+    <input type="text" th:field="*{age}" id="age" placeholder="Age">
+    <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+<!--    <label for="role" th:text="#{team.coach}"></label>-->
+    <select th:field="*{roles}">
+<!--    <option value=""> &#45;&#45; </option>-->
+    <option th:each="role : ${listRoles}"
+            th:value="${role.getId()}"
+            th:text="${role.getName()}">
+    </option>
+    </select>
+    </div>
+    <input type="submit" value="Add User">
+
+</form>

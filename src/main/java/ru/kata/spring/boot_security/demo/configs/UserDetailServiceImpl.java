@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.UserRepository;
+import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 @Service("userDetailServiceImpl")
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -18,8 +18,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return userRepository.findByName(name).orElseThrow(() ->
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(() ->
                 new UsernameNotFoundException("User doesn't exists"));
     }
 }
