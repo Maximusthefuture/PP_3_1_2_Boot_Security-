@@ -14,7 +14,7 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private String password;
     @Column(name = "email")
     private String email;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(name = "user_roles",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
