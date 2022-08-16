@@ -18,6 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+@CrossOrigin
 public class AdminController {
 
 
