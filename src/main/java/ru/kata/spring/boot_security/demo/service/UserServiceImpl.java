@@ -42,4 +42,9 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findById(long id) {
         return repository.findById(id);
     }
+
+    @Override
+    public User findByName(String name) {
+        return repository.findByEmail(name).orElseThrow();
+    }
 }
