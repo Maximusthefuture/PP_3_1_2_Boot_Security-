@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Component
 public class DbInit {
@@ -21,19 +22,22 @@ public class DbInit {
 
     @PostConstruct
     void createAdminIfNotExists() {
-        Role role = new Role("ADMIN");
-        Role userRole = new Role("USER");
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        String password = encoder.encode("admin");
-        String userPassword = encoder.encode("user");
-        User admin = new User("admin", "Adminov", "admin@mail.ru", (byte) 30, password);
-        User user = new User("user", "Userov", "user@mail.ru", (byte) 30, userPassword);
-        roleService.add(role);
-        roleService.add(userRole);
-        admin.addRole(role);
-        admin.addRole(userRole);
-        user.addRole(userRole);
-        userService.add(admin);
-        userService.add(user);
+        List<User> list = userService.listUsers();
+        if (list.isEmpty()) {
+            Role role = new Role("ADMIN");
+            Role userRole = new Role("USER");
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
+            String password = encoder.encode("admin");
+            String userPassword = encoder.encode("user");
+            User admin = new User("admin", "Adminov", "admin@mail.ru", (byte) 30, password);
+            User user = new User("user", "Userov", "user@mail.ru", (byte) 30, userPassword);
+            roleService.add(role);
+            roleService.add(userRole);
+            admin.addRole(role);
+            admin.addRole(userRole);
+            user.addRole(userRole);
+            userService.add(admin);
+            userService.add(user);
+        }
     }
 }
