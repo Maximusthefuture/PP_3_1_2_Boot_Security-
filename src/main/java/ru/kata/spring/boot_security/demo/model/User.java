@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
     @ManyToMany()
-    @Fetch(FetchMode.JOINg)
+    @Fetch(FetchMode.JOIN)
     @JoinTable(name = "user_roles",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))

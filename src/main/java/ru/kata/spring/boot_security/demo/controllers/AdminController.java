@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +16,9 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/admin")
-@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 @CrossOrigin
 public class AdminController {
 
@@ -31,13 +32,13 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @RequestMapping
-    public String index(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
-        model.addAttribute("user", userService.findByName(userDetails.getUsername()));
-        model.addAttribute("roles", roleService.listRoles());
+    @GetMapping
+    public List<User> index(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
+//        model.addAttribute("user", userService.findByName(userDetails.getUsername()));
+//        model.addAttribute("roles", roleService.listRoles());
         List<User> users = userService.listUsers();
         model.addAttribute("users", users);
-        return "index";
+        return users;
     }
 
     @GetMapping(value = "/signup")
@@ -46,6 +47,11 @@ public class AdminController {
         model.addAttribute("listRoles", listRoles);
         model.addAttribute("user", user);
         return "signup";
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable ("id") Long id) {
+        return  ResponseEntity.ok(userService.findById(id).orElseThrow());
     }
 
     @PostMapping(value = "/adduser")
