@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    void add(User user);
+    User add(User user);
     void delete(long id);
     List<User> listUsers();
     void update(User user);

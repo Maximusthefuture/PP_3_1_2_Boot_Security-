@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void add(User user) {
-        repository.saveAndFlush(user);
+    public User add(User user) {
+        return repository.saveAndFlush(user);
     }
 
     @Transactional

@@ -16,10 +16,10 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
 
+@CrossOrigin()
 @RestController
-@RequestMapping("/admin")
-//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-@CrossOrigin
+@RequestMapping("/api/admin")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class AdminController {
 
 
@@ -55,17 +55,17 @@ public class AdminController {
     }
 
     @PostMapping(value = "/adduser")
-    public String createUser(@Validated User user, @Validated Role role, ModelMap model) {
-        userService.add(user);
-        user.addRole(role);
+    public ResponseEntity<User> createUser(@RequestBody User user, ModelMap model) {
+
+//        user.addRole(role);
         model.addAttribute("user", user);
-        return "redirect:/admin";
+        return ResponseEntity.ok(userService.add(user));
     }
 
-    @PatchMapping(value = "/update")
-    public String updateUser(@RequestParam long id, User user) {
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable ("id") Long id, @RequestBody User user) {
         userService.update(user);
-        return "redirect:/admin";
+        return ResponseEntity.ok("");
     }
 
     @DeleteMapping(value = "/delete")
