@@ -33,12 +33,10 @@ public class AdminController {
     }
 
     @GetMapping
-    public List<User> index(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
-//        model.addAttribute("user", userService.findByName(userDetails.getUsername()));
-//        model.addAttribute("roles", roleService.listRoles());
+    public ResponseEntity<List<User>> index(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
         List<User> users = userService.listUsers();
         model.addAttribute("users", users);
-        return users;
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping(value = "/signup")
@@ -56,8 +54,6 @@ public class AdminController {
 
     @PostMapping(value = "/adduser")
     public ResponseEntity<User> createUser(@RequestBody User user, ModelMap model) {
-
-//        user.addRole(role);
         model.addAttribute("user", user);
         return ResponseEntity.ok(userService.add(user));
     }
@@ -69,9 +65,8 @@ public class AdminController {
     }
 
     @DeleteMapping(value = "/delete")
-    public String deleteUser(@RequestParam long id) {
+    public void deleteUser(@RequestParam long id) {
         userService.delete(id);
-        return "redirect:/admin";
     }
 
 }
