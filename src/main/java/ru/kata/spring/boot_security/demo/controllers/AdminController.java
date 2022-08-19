@@ -30,8 +30,8 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @RequestMapping
-    public String index(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
+    @GetMapping
+    public String showUsersList(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
         model.addAttribute("user", userService.findByName(userDetails.getUsername()));
         model.addAttribute("roles", roleService.listRoles());
         List<User> users = userService.listUsers();
